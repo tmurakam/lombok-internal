@@ -46,9 +46,14 @@ javac の JavaFileObject 実装からこちらに処理を delegate するため
 * Javac9BaseFileObjectWrapper
 
 Javac のバージョンごとに実装が異なっている。6, 7 については BaseFileObject を
+(ただし、6 と 7 はパッケージが違うので実質別クラス)、
 9 については PathFileObject を継承している。
-この3クラスの実装は単純で、単に LomboFileObject (実態は InterceptingJavaFileObject)
+この3クラスの実装は単純で、単に LombokFileObject (実態は InterceptingJavaFileObject)
 に全メソッドを delegate するだけである。
+
+なぜ Wrapper クラスが必要かというと、Javac 側で JavaFileObject を上記
+BaseFileObject や PathFileObject に cast しており、
+型をあわせないとエラーになってしまうからである。
 
 LombokFileObjects
 -----------------
